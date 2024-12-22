@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amit & Swati - 25th Anniversary</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:wght@400;700&display=swap');
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fef8f3, #fde5d2);
+            color: #4a2c2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatHeart 4s linear forwards;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 700px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #c8a165;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .card h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            color: #b06544;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .couple-names {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #b06544, #c8a165, #b06544);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .anniversary-title {
+            font-size: 3.2rem;
+            color: #b06544;
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+            padding: 20px 40px;
+        }
+
+        .anniversary-title::before,
+        .anniversary-title::after {
+            content: '❋';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #c8a165;
+            animation: rotate 4s linear infinite;
+        }
+
+        .anniversary-title::before { left: 0; }
+        .anniversary-title::after { right: 0; }
+
+        .image-container {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 30px auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 5px solid #c8a165;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .image-container:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .highlight-date {
+            font-size: 2.2rem;
+            color: #b06544;
+            font-weight: 700;
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #c8a165;
+            display: inline-block;
+            border-radius: 10px;
+            background: rgba(200, 161, 101, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-date::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.4),
+                transparent
+            );
+            animation: shimmer 3s infinite;
+        }
+
+        .venue {
+            font-size: 1.8rem;
+            color: #6e4d4b;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(200, 161, 101, 0.1);
+            border-radius: 10px;
+            border: 1px solid #c8a165;
+        }
+
+        .time {
+            font-size: 1.5rem;
+            color: #b06544;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(200, 161, 101, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #b06544;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #6e4d4b;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #6e4d4b;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+            .couple-names {
+                font-size: 2.2rem;
+            }
+            .anniversary-title {
+                font-size: 2.5rem;
+            }
+            .image-container {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Save the Date</h1>
+        
+        <div class="couple-names">AMIT & SWATI</div>
+        
+        <div class="image-container">
+            <img src="hoho.jpeg" alt="Anniversary Couple">
+        </div>
+
+        <p class="sub-title">Celebrating their</p>
+        
+        <div class="anniversary-title">25th Anniversary</div>
+
+        <div class="highlight-date">February 9, 2025</div>
+
+        <div class="venue">
+            THE KIRANSHREE GRAND
+            <div class="time">6:00 PM Onwards</div>
+        </div>
+
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Join us in celebrating this special day! 💕</p>
+        </footer>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💝';
+            heart.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animation = 'sparkle 1.5s ease-in-out';
+            document.querySelector('.card').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        function updateCountdown() {
+            const targetDate = new Date('2025-02-09T18:00:00').getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.querySelector('.countdown').innerHTML = "<h2>The Celebration Has Begun!</h2>";
+                }
+            }
+
+            update();
+            const timer = setInterval(update, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCountdown();
+            setInterval(createHeart, 2000);
+            setInterval(createSparkle, 1000);
+        });
+    </script>
+</body>
+</html>
